@@ -6,10 +6,10 @@ module.exports = function(RED) {
         var node = this;
 
         node.time = config.time;
-        node.softmax = config.softmax;
-        node.softmin = config.softmin;
-        node.hardmax = config.hardmax;
-        node.hardmin = config.hardmin;
+        node.hardmax = isNaN(config.hardmax) ? null : Number(config.hardmax);
+        node.softmax = isNaN(config.softmax) ? null : Number(config.softmax);
+        node.softmin = isNaN(config.softmin) ? null : Number(config.softmin);
+        node.hardmin = isNaN(config.hardmin) ? null : Number(config.hardmin);
 
         node.timeout = null;
         node.lastMsg = null;
@@ -45,6 +45,10 @@ module.exports = function(RED) {
         }
 
         function valueIsOutsideSoftLimits(value) {
+            if( isNaN(value) ) {
+                return true;
+            }
+            value = Number(value);
             if( node.softmax && value > node.softmax ) {
                 return true;
             }
@@ -55,6 +59,10 @@ module.exports = function(RED) {
         }
 
         function valueIsOutsideHardLimits(value) {
+            if( isNaN(value) ) {
+                return true;
+            }
+            value = Number(value);
             if( node.hardmax && value > node.hardmax ) {
                 return true;
             }
