@@ -1,0 +1,107 @@
+<script type="text/javascript">
+    RED.nodes.registerType('excursion',{
+        category: 'function',
+        color: '#e87d81',
+        defaults: {
+            name: {value:""},
+            time: {value:"3600"},
+            softmax: {value:""},
+            softmin: {value:""},
+            hardmax: {value:""},
+            hardmin: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "bridge.png",
+        label: function() {
+            return this.name||"excursion";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="excursion">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-time"><i class="icon-pause"></i>Time</label>
+        <input type="text" id="node-input-time" placeholder="Allowable soft excursion time, in seconds">
+    </div>
+    <div class="form-row">
+        <label for="node-input-hardmax"><i class="icon-tasks"></i>Hard Max</label>
+        <input type="text" id="node-input-hardmax" placeholder="Hard maximum value">
+    </div>
+    <div class="form-row">
+        <label for="node-input-softmax"><i class="icon-tasks"></i>Soft Max</label>
+        <input type="text" id="node-input-softmax" placeholder="Soft maximum value">
+    </div>
+    <div class="form-row">
+        <label for="node-input-softmin"><i class="icon-tasks"></i>Soft Min</label>
+        <input type="text" id="node-input-softmin" placeholder="Soft minimum value">
+    </div>
+    <div class="form-row">
+        <label for="node-input-hardmin"><i class="icon-tasks"></i>Hard Min</label>
+        <input type="text" id="node-input-hardmin" placeholder="Hard minimum value">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="excursion">
+    <p>Monitors a value for excursions from a range</p>
+
+    <p>Use this node to process a stream of sensor values and ensure that they
+    remain in a defined range.  This node monitors two ranges: a soft range and
+    a hard range.
+    If the value leaves the soft range, the node starts monitoring the value and
+    only reports if it does not return to the soft range within the specified
+    period of time.  If
+    the value returns to the soft range within the defined time period,
+    no report is made.  If the value leaves the hard range, it is reported
+    immediately.</p>
+
+    <p>Once an excursion is reported (hard or soft) all messages are passed through
+    the node until the value returns to the soft range, at which point the node
+    resets.</p>
+
+    <p>This is useful for monitoring systems like refrigerators that must
+    remain in a safe range, but may experience brief excursions (from the soft
+    range) when the door is opened.  The hard range provides a way to set an
+    absolute limit for soft excursions.
+    </p>
+
+    <p>Configuration:</p>
+
+    <ul>
+
+    <li><code>Name</code> - The name to display for this node.  Leave blank to use the default.</li>
+
+    <li><code>Time</code> - The allowable excursion time, in seconds, for the
+    soft range.  If the value
+    remains outside the soft range for this period of time, the last
+    message is sent to output 1 and all subsequent messages also outside of
+    the soft range are sent as well.  Leave this field unset to disable
+    the timer and report all excursions immediately.</li>
+
+    <li><code>Hard Max</code> - The maximum allowable numeric value for the hard
+    range.  This value will be
+    compared to the message payload to determine if it is inside the range.
+    Leave this field blank if there is no hard maximum.</li>
+
+    <li><code>Soft Max</code> - The maximum allowable numeric value for the soft
+    range.  This value will be
+    compared to the message payload to determine if it is inside the range.
+    Leave this field blank if there is no soft maximum.</li>
+
+    <li><code>Soft Min</code> - The minimum allowable numeric value for the soft
+    range.  This value will be
+    compared to the message payload to determine if it is inside the range.
+    Leave this field blank if there is no soft minimum.</li>
+
+    <li><code>Hard Min</code> - The minimum allowable numeric value for the hard
+    range.  This value will be
+    compared to the message payload to determine if it is inside the range.
+    Leave this field blank if there is no hard minimum.</li>
+
+    </ul>
+
+</script>

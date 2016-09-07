@@ -1,0 +1,21 @@
+{
+  "name": "node-red-contrib-excursion",
+  "version": "0.1.0",
+  "description": "A node that reports when a value leaves a specified range for a specified period of time.",
+  "author": "Clough42 (https://github.com/clough42)",
+  "dependencies": {},
+  "keywords": [
+    "node-red"
+  ],
+  "homepage": "https://github.com/clough42/node-red-contrib-excursion",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clough42/node-red-contrib-excursion"
+  },
+  "node-red": {
+    "nodes": {
+      "excursion": "excursion/excursion.js"
+    }
+  }
+}
