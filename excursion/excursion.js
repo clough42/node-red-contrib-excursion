@@ -38,10 +38,10 @@ module.exports = function(RED) {
         }
 
         function reportExcursion() {
-            node.status({fill:"red",shape:"dot",text:"Excursion! (" + lastMsg.payload + ")"});
+            node.status({fill:"red",shape:"dot",text:"Excursion! (" + node.lastMsg.payload + ")"});
             stopTimer();
             node.inExcursion = true;
-            node.send(lastMsg);
+            node.send(node.lastMsg);
         }
 
         function valueIsOutsideSoftLimits(value) {
@@ -73,7 +73,7 @@ module.exports = function(RED) {
         }
 
         this.on('input', function(msg) {
-            lastMsg = msg;
+            node.lastMsg = msg;
             var current = msg.payload;
 
             if( valueIsOutsideHardLimits(current) ) {
