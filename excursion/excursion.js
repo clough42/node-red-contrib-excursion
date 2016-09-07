@@ -11,8 +11,6 @@ module.exports = function(RED) {
         node.hardmax = config.hardmax;
         node.hardmin = config.hardmin;
 
-        node.log("Hard max: " + node.hardmax);
-
         node.timeout = null;
         node.lastMsg = null;
         node.inExcursion = false;
@@ -40,7 +38,7 @@ module.exports = function(RED) {
         }
 
         function reportExcursion() {
-            node.status({fill:"red",shape:"dot",text:"Excursion!"});
+            node.status({fill:"red",shape:"dot",text:"Excursion! (" + lastMsg.payload + ")"});
             stopTimer();
             inExcursion = true;
             node.send(lastMsg);
@@ -78,11 +76,11 @@ module.exports = function(RED) {
                 if (inExcursion) {
                     reportExcursion();
                 } else {
-                    node.status({fill:"yellow",shape:"dot",text:"Soft excursion..."});
+                    node.status({fill:"yellow",shape:"dot",text:"Soft excursion... (" + current + ")"});
                     startTimer();
                 }
             } else {
-                node.status({fill:"green",shape:"dot",text:"OK"});
+                node.status({fill:"green",shape:"dot",text:"OK (" + current + ")"});
                 inExcursion = false;
                 stopTimer();
             }
