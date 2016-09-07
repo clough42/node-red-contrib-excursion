@@ -40,7 +40,7 @@ module.exports = function(RED) {
         function reportExcursion() {
             node.status({fill:"red",shape:"dot",text:"Excursion! (" + lastMsg.payload + ")"});
             stopTimer();
-            inExcursion = true;
+            node.inExcursion = true;
             node.send(lastMsg);
         }
 
@@ -81,7 +81,7 @@ module.exports = function(RED) {
                 reportExcursion();
             } else if( valueIsOutsideSoftLimits(current) ) {
                 node.log("Value exceeds soft limits: " + current);
-                if (inExcursion) {
+                if (node.inExcursion) {
                     reportExcursion();
                 } else {
                     node.status({fill:"yellow",shape:"dot",text:"Soft excursion... (" + current + ")"});
@@ -89,9 +89,13 @@ module.exports = function(RED) {
                 }
             } else {
                 node.status({fill:"green",shape:"dot",text:"OK (" + current + ")"});
-                inExcursion = false;
+                node.inExcursion = false;
                 stopTimer();
             }
+        });
+
+        this.on('close', function() {
+            stopTimer();
         });
     };
 
