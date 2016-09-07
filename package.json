@@ -5,7 +5,12 @@
   "author": "Clough42 (https://github.com/clough42)",
   "dependencies": {},
   "keywords": [
-    "node-red"
+    "node-red",
+    "range",
+    "region",
+    "zone",
+    "excursion",
+    "threshold"
   ],
   "homepage": "https://github.com/clough42/node-red-contrib-excursion",
   "license": "MIT",
