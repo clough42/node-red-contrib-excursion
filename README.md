@@ -63,6 +63,6 @@ and again when the timer expires and the message is sent.
 While it is running, the node displays its status:
 
 - 'OK' - The value is in the allowable range.
-- 'Soft excursion...' - The most recent value is outside the allowable range.  The timer is running.
+- 'Soft excursion...' - The most recent value is outside the soft range.  The timer is running.
 - 'Excursion!' - An excursion has been triggered and data is being sent to the output.
 - 'Waiting for data' - No data values have arrived yet.
